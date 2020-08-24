@@ -134,7 +134,7 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey, "Shift"   }, "l", function () awful.spawn("i3lock --color 3F3F3F") end,
+    awful.key({ modkey, "Shift"   }, "l", function () awful.spawn("betterlockscreen -l dim") end,
               {description = "open a terminal", group = "robcsi"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "robcsi"}),
