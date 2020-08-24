@@ -47,6 +47,7 @@ height = 27
 ;offset-y = 1%
 radius = 0
 fixed-center = true
+bottom = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -54,7 +55,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 4
+border-size = 2
 border-color = #00000000
 
 padding-left = 0
@@ -93,6 +94,11 @@ cursor-scroll = ns-resize
 type = internal/xwindow
 label = %title%
 label-maxlen = 100
+format-prefix = 
+;format-prefix-underline = #292d3e
+;format-underline = #e1acff
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
 
 [module/filesystem]
 type = internal/fs
