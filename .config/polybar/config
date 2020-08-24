@@ -1,0 +1,188 @@
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = true
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+;compositing-background = over
+;compositing-foreground = over
+;compositing-overline = over
+;compositing-underline = over
+;compositing-border = over
+
+[colors]
+background = #f90f0f0f
+background-alt = #f93f3f3f
+foreground = #d4be98
+foreground-alt = #d4be98
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/robcsi]
+; monitor = ${env:MONITOR:LVDS-1}
+; monitor = ${env:MONITOR}
+width = 100%
+height = 20
+fixed-center = true
+border-size= 0
+;radius = 6.0
+bottom = true
+
+;wm-restack = robcsi
+
+; Enable support for inter-process messaging 
+; See the Messaging wiki page for more details.
+enable-ipc = true 
+override-redirect = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+padding-left = 5
+padding-right = 5
+
+module-margin-left = 2
+module-margin-right = 3
+
+separator = 
+
+font-0 = San Fransisco Text:size=8;0
+font-1 = FontAwesome:size=9;0
+font-2 = Weather Icons:size=10;0
+
+tray-position = right
+tray-padding = 5
+tray-underline-size = 1
+tray-detached = false
+tray-background = ${colors.background}
+tray-foreground = ${colors.foreground-alt}
+
+modules-left = ws
+modules-center = xwindow
+modules-right = updates weather date
+
+;wm-restack = bspwm
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+;[module/xwindow]
+;type = internal/xwindow
+;label = %title:0:30:...%
+
+; Separator in between workspaces
+; label-separator = |
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = %a, %b %d %Y
+time = %H:%M
+label = %date% %time%
+
+background = ${colors.background-alt} 
+
+[module/weather]
+type = custom/script
+exec = curl -s wttr.in/Cluj-Napoca?format=1
+interval = 1800
+label-font = 3
+
+[module/updates]
+type = custom/script
+exec = apt-get upgrade -s |grep -P '^\d+ upgraded'|cut -d" " -f1
+interval = 3600
+label = %output%
+format-prefix = " "
+
+[module/ws]
+type = internal/xworkspaces
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = false
+
+; Create click handler used to focus desktop
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle desktops
+; Default: true
+enable-scroll = false
+
+; icon-[0-9]+ = <desktop-name>;<icon>
+; NOTE: The desktop name needs to match the name configured by the WM
+; You can get a list of the defined desktops using:
+; $ xprop -root _NET_DESKTOP_NAMES
+; Note: Neither <desktop-name> nor <icon> can contain a semicolon (;)
+;icon-0 = 1;
+;icon-1 = 2;
+;icon-2 = 3;
+;icon-3 = 4;
+;icon-4 = 5;
+;icon-5 = 6;
+;icon-6 = 7;
+;icon-7 = 8;
+;icon-8 = 9;
+
+format = <label-state>
+label-monitor = %name%
+
+label-active = %name%
+label-active-foreground = ${colors.foreground}
+label-active-background = ${colors.background}
+label-active-underline= #6790eb
+label-active-padding = 1
+
+label-occupied = %name%
+label-occupied-background = ${colors.background}
+label-occupied-padding = 1
+
+label-urgent = %name%
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-underline = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %name%
+label-empty-foreground = ${colors.foreground}
+label-empty-padding = 1
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/xwindow]
+type = internal/xwindow
+
+; Available tokens:
+;   %title%
+; Default: %title%
+label = %title%
+label-maxlen = 100
+
+format-prefix = 
+format-prefix-underline = #292d3e
+format-underline = #e1acff
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+; vim:ft=dosini
