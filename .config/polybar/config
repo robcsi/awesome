@@ -42,29 +42,27 @@ alert = #bd2c40
 [bar/robcsi]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 25
-;offset-x = 1%
-;offset-y = 1%
+height = 22
 radius = 0
 fixed-center = true
-bottom = false
+bottom = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 2
+line-size = 3
 line-color = #f00
 
 border-size = 2
-border-color = #00000000
+border-color = ${colors.background}
 
 padding-left = 0
-padding-right = 2
+padding-right = 0
 
 offset-x = 0
-offset-y = 1
+offset-y = 0
 
-module-margin-left = 1
+module-margin-left = 2
 module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
@@ -73,13 +71,13 @@ font-2 = siji:pixelsize=10;1
 
 modules-left = ws
 modules-center = xwindow
-modules-right = cpu memory weather updates date 
+modules-right = cpu temperature memory updates weather date 
 
 tray-position = right
 tray-padding = 2
-;tray-background = #0063ff
+tray-background = ${colors.background}
 tray-offset-x = 0
-tray-offset-y = 1
+tray-offset-y = 2
 tray-scale = 1
 
 separator =
@@ -104,16 +102,16 @@ label = %title%
 label-maxlen = 100
 format-prefix = 
 ;format-prefix-underline = #292d3e
-format-underline = #0a6cf5
+format-underline = #2aa198
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "CPU: "
+format-prefix = "C/L: "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #FF
 label = %percentage:2%%
 
 [module/memory]
@@ -121,7 +119,7 @@ type = internal/memory
 interval = 2
 format-prefix = "MEM: "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #FFA500
 label = %percentage_used%%
 
 [module/date]
@@ -133,13 +131,13 @@ date = "%Y-%m-%d"
 time = "%H:%M"
 
 format-prefix =
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-prefix-foreground = ${colors.foreground}
+format-underline = #2aa198
 
 label = " %date% @ %time% "
 label-font = 5
 label-foreground = 
-label-background = ${colors.background-alt}
+label-background = ${colors.background}
 
 [module/battery]
 type = internal/battery
@@ -179,19 +177,16 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <ramp> <label>
-format-underline = #0a6cf5
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
 label = %temperature-c%
 label-warn = %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
+format = <label>
+format-underline = #FF
+format-warn = <label-warn>
+format-warn-underline = ${self.format-underline}
+format-prefix = "C/T: "
+format-prefix-foreground = ${colors.foreground-alt}
 
 [module/ws]
 type = internal/xworkspaces
@@ -234,7 +229,7 @@ label-monitor = %name%
 label-active = %name%
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background-alt}
-label-active-underline = #0a6cf5
+label-active-underline = #2aa198
 label-active-padding = 2
 
 label-occupied = %name%
@@ -263,7 +258,7 @@ interval = 1800
 label-font = 3
 format-prefix = "T: "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #586e75
 
 [module/updates]
 type = custom/script
@@ -272,7 +267,7 @@ interval = 3600
 label = %output%
 format-prefix = "U: "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #00FF00
 
 [settings]
 screenchange-reload = true
@@ -280,7 +275,7 @@ screenchange-reload = true
 ;compositing-background = screen
 ;compositing-foreground = source
 ;compositing-border = over
-;pseudo-transparency = false
+pseudo-transparency = true
 
 [global/wm]
 margin-top = 0

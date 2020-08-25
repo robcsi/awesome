@@ -148,6 +148,11 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
 
+    awful.key({ modkey,           }, "z",     function () awful.tag.incgap(1)          end,
+              {description = "increase tag gap", group = "layout"}),
+    awful.key({ modkey,           }, "x",     function () awful.tag.incgap(-1)          end,
+              {description = "decrease tag gap", group = "layout"}),
+
     --awful.key({ modkey, "Control" }, "n",
               --function ()
                   --local c = awful.client.restore()
@@ -173,8 +178,12 @@ globalkeys = gears.table.join(
     -- Launch Caja
     awful.key({ modkey },            "e",     function () 
     awful.util.spawn("caja") end,
-      {description = "launch file manager (caja)", group = "robcsi"})
+      {description = "launch file manager (caja)", group = "robcsi"}),
 
+    -- Launch vifm
+    awful.key({ modkey },            "r",     function () 
+    awful.util.spawn("alacritty -e vifm") end,
+      {description = "launch file manager (vifm)", group = "robcsi"})
 )
 
 clientkeys = gears.table.join(
@@ -325,16 +334,10 @@ awful.rules.rules = {
         },
         class = {
           "Arandr",
-          "Blueman-manager",
-          "Gpick",
-          "Kruler",
           "MessageWin",  -- kalarm.
-          "Sxiv",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
-          "veromix",
           "Artha",
-          "xtightvncviewer"},
+          "Orage"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -386,7 +389,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Adding gaps
 beautiful.useless_gap = 5
 beautiful.border_normal = "#3F3F3F"
-beautiful.border_focus  = "#dc3232"
+beautiful.border_focus  = "#2aa198"
 beautiful.border_marked = "#CC9393"
 
 -- Autostart
