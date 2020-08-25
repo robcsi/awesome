@@ -182,12 +182,12 @@ globalkeys = gears.table.join(
 
     -- Launch vifm
     awful.key({ modkey },            "r",     function () 
-    awful.util.spawn("alacritty -e vifm") end,
+    awful.util.spawn(terminal .. " -e vifm") end,
       {description = "launch file manager (vifm)", group = "robcsi"}),
 
     -- Launch gotop
     awful.key({ modkey , "Shift" },            "r",     function () 
-    awful.util.spawn("alacritty -e gotop") end,
+    awful.util.spawn(terminal .. " -e gotop") end,
       {description = "launch gotop", group = "robcsi"})
 )
 
