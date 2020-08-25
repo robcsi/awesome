@@ -135,7 +135,7 @@ globalkeys = gears.table.join(
 
     -- Standard program
     awful.key({ modkey, "Shift"   }, "l", function () awful.spawn("betterlockscreen -l dim") end,
-              {description = "open a terminal", group = "robcsi"}),
+              {description = "lock screen", group = "robcsi"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "robcsi"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
@@ -168,7 +168,13 @@ globalkeys = gears.table.join(
     -- Launch Browser
     awful.key({ modkey },            "w",     function () 
     awful.util.spawn("firefox") end,
-      {description = "launch browser (firefox)", group = "robcsi"})
+      {description = "launch browser (firefox)", group = "robcsi"}),
+
+    -- Launch Caja
+    awful.key({ modkey },            "e",     function () 
+    awful.util.spawn("caja") end,
+      {description = "launch file manager (caja)", group = "robcsi"})
+
 )
 
 clientkeys = gears.table.join(
@@ -212,7 +218,18 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"})
+        {description = "(un)maximize horizontally", group = "client"}),
+
+    awful.key({ modkey },            "space", function (c)
+          if client.focus == awful.client.getmaster() then
+             awful.client.swap.bydirection("right")
+          else
+             c:swap(awful.client.getmaster())
+          end
+          client.focus = awful.client.getmaster()
+          client.focus:raise();
+       end ,
+       {description = "make client on right master", group = "layout"})
 )
 
 -- Bind all key numbers to tags.
