@@ -9,6 +9,10 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
+--require("eminent")
+--require("email")
+require("json")
+local wibox = require("wibox")
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -74,6 +78,92 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+
+    -- Hide all empty tags
+    --s.mytaglist = awful.widget.taglist {
+       --screen = s,
+       --filter = function (t) return t.selected or #t:clients() > 0 end,
+       --buttons = taglist_buttons
+   --}
+-- Create the wibox
+    s.mywibox = awful.wibar({ position = "top", screen = s })
+
+    local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+    local volumebar_widget = require("awesome-wm-widgets.volumebar-widget.volumebar")
+    local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+    local netspeed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
+    local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+    local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+    local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+    local brightnessarc_widget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
+    local storage_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
+    local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+    local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
+    local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+    mytextclock = wibox.widget.textclock()
+
+    local cw = calendar_widget({
+       theme = 'nord',
+       placement = 'top_left'
+    }),
+
+    s.mywibox:setup {
+       layout = wibox.layout.align.horizontal,
+       { -- Right widgets
+          mytextclock,
+          layout = wibox.layout.fixed.horizontal,
+          cpu_widget({
+             width = 70,
+             step_width = 2,
+             step_spacing = 0,
+             color = '#434c5e'
+          }),
+          volumebar_widget({
+             main_color = '#af13f7',
+             mute_color = '#ff0000',
+             width = 50,
+             shape = 'rounded_bar', -- octogon, hexagon, powerline, etc
+             -- bar's height = wibar's height minus 2x margins
+             margins = 8
+          }),
+          volumearc_widget({
+             button_press = function(_, _, _, button)   -- Overwrites the button press behaviour to open pavucontrol when clicked
+                if (button == 1) then awful.spawn('pavucontrol --tab=3', false)
+                end
+             end }),
+             --volume_widget({display_notification = true}), --icons are needed!
+             netspeed_widget(),
+             --battery_widget({
+             --display_notification = true,
+             --notification_position = 'top_left',
+             --show_current_level = true,
+             --enable_battery_warning = true
+             --}),
+             batteryarc_widget({
+                show_current_level = true,
+                arc_thickness = 1,
+             }),
+             brightnessarc_widget(),
+             --email_icon,
+             --email_widget,
+             storage_widget({ mounts = { '/', '/home' } }), -- multiple mounts
+             --wibox.widget.textbox(':'),
+             ram_widget({
+                display_labels = true,
+             }),
+             weather_widget({
+                api_key='637bfed03fbf6f0c45e0757f9c5b3d81',
+                coordinates = {46.770920, 23.589920},
+                show_hourly_forecast = true,
+                show_daily_forecast = true,
+             }),
+       }
+    }
+
+    mytextclock:connect_signal("button::press", 
+    function(_, _, _, button)
+       if button == 1 then cw.toggle() end
+    end)
 
 end)
 -- }}}
